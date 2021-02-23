@@ -35,7 +35,7 @@ public class ChunkPos {
 		this.z = z;
 	}
 
-	public Chunk toChunk(GenerationContext generationContext) {
+	public Chunk toChunk(Context generationContext) {
 		return generationContext.getInstance().getChunk(x, z);
 	}
 

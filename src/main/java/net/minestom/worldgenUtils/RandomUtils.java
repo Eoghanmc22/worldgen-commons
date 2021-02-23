@@ -2,18 +2,18 @@ package net.minestom.worldgenUtils;
 
 public class RandomUtils {
 
-    public static int randomIntBetween(GenerationContext ctx, int min, int max) {
+    public static int randomIntBetween(Context ctx, int min, int max) {
         int range = max - min;
-        return ctx.rng.nextInt(range) + min;
+        return ctx.getRNG().nextInt(range) + min;
     }
 
-    public static float randomFloatBetween(GenerationContext ctx, float min, float max) {
+    public static float randomFloatBetween(Context ctx, float min, float max) {
         float range = max - min;
-        return ctx.rng.nextFloat() * range + min;
+        return ctx.getRNG().nextFloat() * range + min;
     }
 
-    public static double randomDoubleBetween(GenerationContext ctx, double min, double max) {
+    public static double randomDoubleBetween(Context ctx, double min, double max) {
         double range = max - min;
-        return ctx.rng.nextDouble() * range + min;
+        return ctx.getRNG().nextDouble() * range + min;
     }
 }

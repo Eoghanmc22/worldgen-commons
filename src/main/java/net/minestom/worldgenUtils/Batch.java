@@ -95,13 +95,13 @@ public class Batch {
 		return Block.fromStateId(getBlockIdAt(x, y, z));
 	}
 
-	public void apply(GenerationContext generationContext, BlockPosition offset) {
+	public void apply(Context generationContext, BlockPosition offset) {
 		for (final Map.Entry<ChunkPos, HashMap<SimpleBlockPosition, SimpleBlockData>> chunkdata : this.data.entrySet()) {
 			Batch.applyChunk(generationContext, offset, chunkdata.getKey(), chunkdata.getValue());
 		}
 	}
 
-	public static void applyChunk(GenerationContext generationContext, BlockPosition offset, ChunkPos cpos, HashMap<SimpleBlockPosition, SimpleBlockData> data) {
+	public static void applyChunk(Context generationContext, BlockPosition offset, ChunkPos cpos, HashMap<SimpleBlockPosition, SimpleBlockData> data) {
 		if (cpos.toChunk(generationContext).isLoaded()) {
 			for (final SimpleBlockData bd : data.values()) {
 				bd.apply(generationContext.getInstance(), offset.getX(), offset.getY(), offset.getZ());
