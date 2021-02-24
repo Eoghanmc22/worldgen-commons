@@ -1,9 +1,7 @@
 package net.minestom.worldgenUtils;
 
 import net.minestom.server.instance.Chunk;
-import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
-import net.minestom.server.utils.chunk.ChunkUtils;
 
 public class SimpleBlockData {
 
@@ -32,8 +30,8 @@ public class SimpleBlockData {
 		this.blockStateId = blockStateId;
 	}
 
-	public void apply(Chunk chunk, int yOffset) {
-		chunk.UNSAFE_setBlock(x, y + yOffset, z, blockStateId, (short) 0, null, false);
+	public void apply(Chunk chunk) {
+		chunk.UNSAFE_setBlock(x, y, z, blockStateId, (short) 0, null, false);
 	}
 
 }

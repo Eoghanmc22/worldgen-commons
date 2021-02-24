@@ -18,6 +18,11 @@ import static net.minestom.worldgenUtils.SimpleBlockPosition.at;
 public class Batch {
 
 	private final HashMap<ChunkPos, HashMap<SimpleBlockPosition, SimpleBlockData>> data = new HashMap<>();
+	private final BlockPosition offset;
+
+	public Batch(BlockPosition offset) {
+		this.offset = offset;
+	}
 
 	public void setBlock(Position pos, Block b) {
 		setBlock((int)pos.getX(), (int)pos.getY(), (int)pos.getZ(), b);
@@ -39,7 +44,10 @@ public class Batch {
 		setBlockId(bpos.getX(), bpos.getY(), bpos.getZ(), b);
 	}
 
-	public void setBlockId(int x, int y, int z, short b) {
+	public void setBlockId(int x, int y, int z, final short b) {
+		x += offset.getX();
+		y += offset.getY();
+		z += offset.getZ();
 		final SimpleBlockPosition at = at(x, y, z);
 		final ChunkPos chunk = at.getChunk();
 		HashMap<SimpleBlockPosition, SimpleBlockData> chunkData;
@@ -62,6 +70,9 @@ public class Batch {
 	}
 
 	public boolean hasBlockAt(int x, int y, int z) {
+		x += offset.getX();
+		y += offset.getY();
+		z += offset.getZ();
 		final SimpleBlockPosition at = at(x, y, z);
 		return data.containsKey(at.getChunk()) && data.get(at.getChunk()).containsKey(at);
 	}
@@ -75,6 +86,9 @@ public class Batch {
 	}
 
 	public short getBlockIdAt(int x, int y, int z) {
+		x += offset.getX();
+		y += offset.getY();
+		z += offset.getZ();
 		final SimpleBlockPosition at = at(x, y, z);
 		if (data.containsKey(at.getChunk())) {
 			HashMap<SimpleBlockPosition, SimpleBlockData> data = this.data.get(at.getChunk());
@@ -97,19 +111,19 @@ public class Batch {
 		return Block.fromStateId(getBlockIdAt(x, y, z));
 	}
 
-	public void apply(Context generationContext, BlockPosition offset) {
+	public void apply(Context generationContext) {
 		for (final Map.Entry<ChunkPos, HashMap<SimpleBlockPosition, SimpleBlockData>> chunkdata : this.data.entrySet()) {
-			Batch.applyChunk(generationContext, offset, chunkdata.getKey(), chunkdata.getValue());
+			Batch.applyChunk(generationContext, chunkdata.getKey(), chunkdata.getValue());
 		}
 		generationContext.getInstance().refreshLastBlockChangeTime();
 	}
 
-	public static void applyChunk(Context generationContext, BlockPosition offset, ChunkPos cpos, HashMap<SimpleBlockPosition, SimpleBlockData> data) {
-		final Chunk chunk = cpos.toChunk(generationContext, offset);
+	public static void applyChunk(Context generationContext, ChunkPos cpos, HashMap<SimpleBlockPosition, SimpleBlockData> data) {
+		final Chunk chunk = cpos.toChunk(generationContext);
 		if (ChunkUtils.isLoaded(chunk)) {
 			synchronized (chunk) {
 				for (final SimpleBlockData bd : data.values()) {
-					bd.apply(chunk, offset.getY());
+					bd.apply(chunk);
 				}
 				chunk.sendChunk();
 			}
