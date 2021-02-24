@@ -107,6 +107,7 @@ public class Batch {
 				bd.apply(generationContext.getInstance(), offset.getX(), offset.getY(), offset.getZ());
 			}
 			cpos.toChunk(generationContext).sendChunk();
+			generationContext.getInstance().refreshLastBlockChangeTime();
 		}
 	}
 
