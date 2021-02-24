@@ -1,6 +1,7 @@
 package net.minestom.worldgenUtils;
 
 import net.minestom.server.instance.Chunk;
+import net.minestom.server.utils.BlockPosition;
 
 public class ChunkPos {
 
@@ -37,6 +38,10 @@ public class ChunkPos {
 
 	public Chunk toChunk(Context generationContext) {
 		return generationContext.getInstance().getChunk(x, z);
+	}
+
+	public Chunk toChunk(Context generationContext, BlockPosition offset) {
+		return generationContext.getInstance().getChunkAt(x*16 + offset.getX(), z*16 + offset.getZ());
 	}
 
 	public static ChunkPos fromChunk(Chunk c) {

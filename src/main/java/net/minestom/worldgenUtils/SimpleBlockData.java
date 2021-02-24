@@ -32,16 +32,8 @@ public class SimpleBlockData {
 		this.blockStateId = blockStateId;
 	}
 
-	public void apply(Instance instance, int xOffset, int yOffset, int zOffset) {
-		int rX = x + xOffset;
-		int rY = y + yOffset;
-		int rZ = z + zOffset;
-		final Chunk chunk = instance.getChunkAt(rX, rZ);
-		if (ChunkUtils.isLoaded(chunk)) {
-			synchronized (chunk) {
-				chunk.UNSAFE_setBlock(rX, rY, rZ, blockStateId, (short) 0, null, false);
-			}
-		}
+	public void apply(Chunk chunk, int yOffset) {
+		chunk.UNSAFE_setBlock(x, y + yOffset, z, blockStateId, (short) 0, null, false);
 	}
 
 }

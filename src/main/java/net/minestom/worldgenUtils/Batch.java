@@ -1,8 +1,10 @@
 package net.minestom.worldgenUtils;
 
+import net.minestom.server.instance.Chunk;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.utils.BlockPosition;
 import net.minestom.server.utils.Position;
+import net.minestom.server.utils.chunk.ChunkUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -103,11 +105,14 @@ public class Batch {
 	}
 
 	public static void applyChunk(Context generationContext, BlockPosition offset, ChunkPos cpos, HashMap<SimpleBlockPosition, SimpleBlockData> data) {
-		if (cpos.toChunk(generationContext).isLoaded()) {
-			for (final SimpleBlockData bd : data.values()) {
-				bd.apply(generationContext.getInstance(), offset.getX(), offset.getY(), offset.getZ());
+		final Chunk chunk = cpos.toChunk(generationContext, offset);
+		if (ChunkUtils.isLoaded(chunk)) {
+			synchronized (chunk) {
+				for (final SimpleBlockData bd : data.values()) {
+					bd.apply(chunk, offset.getY());
+				}
+				chunk.sendChunk();
 			}
-			cpos.toChunk(generationContext).sendChunkUpdate();
 		}
 	}
 
