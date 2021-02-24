@@ -99,6 +99,7 @@ public class Batch {
 		for (final Map.Entry<ChunkPos, HashMap<SimpleBlockPosition, SimpleBlockData>> chunkdata : this.data.entrySet()) {
 			Batch.applyChunk(generationContext, offset, chunkdata.getKey(), chunkdata.getValue());
 		}
+		generationContext.getInstance().refreshLastBlockChangeTime();
 	}
 
 	public static void applyChunk(Context generationContext, BlockPosition offset, ChunkPos cpos, HashMap<SimpleBlockPosition, SimpleBlockData> data) {
@@ -106,8 +107,7 @@ public class Batch {
 			for (final SimpleBlockData bd : data.values()) {
 				bd.apply(generationContext.getInstance(), offset.getX(), offset.getY(), offset.getZ());
 			}
-			cpos.toChunk(generationContext).sendChunk();
-			generationContext.getInstance().refreshLastBlockChangeTime();
+			cpos.toChunk(generationContext).sendChunkUpdate();
 		}
 	}
 
