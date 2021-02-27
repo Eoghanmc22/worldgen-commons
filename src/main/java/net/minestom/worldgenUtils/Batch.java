@@ -50,14 +50,13 @@ public class Batch {
 		z += offset.getZ();
 		final SimpleBlockPosition at = at(x, y, z);
 		final ChunkPos chunk = at.getChunk();
-		HashMap<SimpleBlockPosition, SimpleBlockData> chunkData;
-		if (data.containsKey(chunk)) {
-			chunkData = data.get(chunk);
+		final HashMap<SimpleBlockPosition, SimpleBlockData> chunkData = data.get(chunk);
+		if (chunkData != null) {
 			chunkData.put(at, new SimpleBlockData(x,y,z,b));
 		} else {
-			chunkData = new HashMap<>();
-			chunkData.put(at, new SimpleBlockData(x,y,z,b));
-			data.put(chunk, chunkData);
+			final HashMap<SimpleBlockPosition, SimpleBlockData> newChunkData = new HashMap<>();
+			newChunkData.put(at, new SimpleBlockData(x,y,z,b));
+			data.put(chunk, newChunkData);
 		}
 	}
 
