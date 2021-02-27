@@ -91,8 +91,9 @@ public class Batch {
 		final SimpleBlockPosition at = at(x, y, z);
 		if (data.containsKey(at.getChunk())) {
 			HashMap<SimpleBlockPosition, SimpleBlockData> data = this.data.get(at.getChunk());
-			if (data.containsKey(at)) {
-				return data.get(at).blockStateId;
+			final SimpleBlockData simpleBlockData = data.get(at);
+			if (simpleBlockData != null) {
+				return simpleBlockData.blockStateId;
 			}
 		}
 		return 0;
