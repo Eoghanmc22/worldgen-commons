@@ -93,7 +93,7 @@ public class SingleChunkBatch {
 		return Block.fromStateId(getBlockIdAt(x, y, z));
 	}
 
-	public void apply(Context generationContext) {
+	public void apply() {
 		for (final SimpleBlockData bd : data.values()) {
 			bd.apply(chunk);
 		}
