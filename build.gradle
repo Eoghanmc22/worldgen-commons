@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.Minestom:Minestom:7edc508662'
+    implementation 'com.github.Minestom:Minestom:cc97062dfa'
 }
 
 task sourceJar(type: Jar) {
