@@ -125,7 +125,10 @@ public class Batch {
 				for (final SimpleBlockData bd : data.values()) {
 					bd.apply(chunk);
 				}
-				chunk.sendChunk();
+				// TODO remove
+				generationContext.getInstance().scheduleNextTick(instance -> {
+					chunk.sendChunk();
+				});
 			}
 		}
 	}

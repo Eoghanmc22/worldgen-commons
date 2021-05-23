@@ -40,4 +40,12 @@ public class SimpleBlockPosition {
 		return result;
 	}
 
+	@Override
+	public String toString() {
+		return "SimpleBlockPosition{" +
+				"x=" + x +
+				", y=" + y +
+				", z=" + z +
+				'}';
+	}
 }

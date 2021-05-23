@@ -34,4 +34,13 @@ public class SimpleBlockData {
 		chunk.UNSAFE_setBlock(x, y, z, blockStateId, (short) 0, null, false);
 	}
 
+	@Override
+	public String toString() {
+		return "SimpleBlockData{" +
+				"x=" + x +
+				", y=" + y +
+				", z=" + z +
+				", blockStateId=" + blockStateId +
+				'}';
+	}
 }
